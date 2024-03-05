@@ -1,0 +1,8 @@
+Flask>=1.1.2
+mnemonic>=0.20
+eth-account>=0.5.4
+web3>=5.17.0
+flask_sqlalchemy>=2.4.4
+bip44>=0.1.0
+eth-utils>=1.9.5
+bip32utils>=0.3.post4

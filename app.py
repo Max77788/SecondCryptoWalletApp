@@ -15,7 +15,7 @@ app = Flask(__name__)
 migrate = Migrate(app, db)
 # Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///walletuser.db'  # Configure your database URI
-app.config['SECRET_KEY'] = 'Maxxx_secret__key'  # Set a secret key for security purposes
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")  # Set a secret key for security purposes
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -41,7 +41,7 @@ def register():
         
         # Generate the wallet and retrieve its data
         mnemonic, private_key, primary_address = wallet_generator()
-        print(mnemonic, private_key, primary_address) # debugging line
+        # print(mnemonic, private_key, primary_address) # debugging line
 
         # Hash the password
         hashed_password = generate_password_hash(form.password.data)

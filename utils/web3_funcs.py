@@ -53,7 +53,6 @@ def get_total_balance():
         return "User not found", 404  # Or handle as appropriate
 
     web3 = Web3(Web3.HTTPProvider(os.getenv("INFURA_PROJECT_URL")))  # Example provider
-    print("project url is found", os.getenv("INFURA_PROJECT_URL"))
 
 
     total_balance = sum(web3.eth.get_balance(wallet.address) for wallet in user.wallets)
