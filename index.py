@@ -142,6 +142,44 @@ def generate_new_wallet():
     
     return {'success': True}
 
+@app.route('/send_transaction', methods=['POST', 'GET'])
+def send_ethereum(user_id, to_address, amount_eth, gas_price_gwei):
+    user = User.query.get(user_id)
+    if not user:
+        return "User not found", 404
+
+    # Assuming the user's wallet information includes a private key
+    private_key = user.private_key  # Make sure this is securely managed
+
+    # Setup Web3
+    web3 = Web3(Web3.HTTPProvider(os.getenv("INFURA_PROJECT_URL")))
+    
+    # Convert amount from Ether to Wei
+    amount_wei = web3.toWei(amount_eth, 'ether')
+    
+    # Build Transaction
+    nonce = web3.eth.getTransactionCount(user.eth_address)
+    gas_price = web3.toWei(gas_price_gwei, 'gwei')
+    gas_limit = 21000  # Assuming a simple transfer, adjust based on transaction complexity
+    
+    tx = {
+        'nonce': nonce,
+        'to': to_address,
+        'value': amount_wei,
+        'gas': gas_limit,
+        'gasPrice': gas_price,
+        'chainId': 1  # Mainnet, adjust for testnets
+    }
+    
+    # Sign Transaction
+    signed_tx = web3.eth.account.signTransaction(tx, private_key)
+    
+    # Send Transaction
+    tx_hash = web3.eth.sendRawTransaction(signed_tx.rawTransaction)
+    
+    return web3.toHex(tx_hash)
+
+
 # tests
 @app.route('/test_db')
 def test_db():
