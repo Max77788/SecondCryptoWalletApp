@@ -6,3 +6,4 @@ flask_sqlalchemy>=2.4.4
 bip44>=0.1.0
 eth-utils>=1.9.5
 bip32utils>=0.3.post4
+flask_migrate
