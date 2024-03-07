@@ -1,10 +1,10 @@
 from flask import Flask, render_template, url_for, flash, redirect, request, session, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+#from flask_sqlalchemy import SQLAlchemy
+#from flask_migrate import Migrate
 from flask_mongoengine import MongoEngine
 import pymongo
 # from pymongo.server_api import ServerApi
-from werkzeug.security import generate_password_hash, check_password_hash
+# from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegistrationForm, LoginForm, SendEthForm
 # from models import db, User, Wallet
 from models_mongo import User

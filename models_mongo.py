@@ -1,6 +1,4 @@
 from mongoengine import Document, StringField, ReferenceField, ListField, EmailField, CASCADE, connect, disconnect
-from werkzeug.security import generate_password_hash, check_password_hash
-import os
 
 # disconnect()
  
