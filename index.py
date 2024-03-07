@@ -8,46 +8,16 @@ import pymongo
 from forms import RegistrationForm, LoginForm, SendEthForm
 # from models import db, User, Wallet
 from models_mongo import User
-from web3 import Web3
-from mnemonic import Mnemonic
-from eth_account import Account
-from utils.web3_funcs import wallet_generator, get_total_balance, wallet_generator, full_transaction, get_balance
+from utils.web3_funcs import wallet_generator, wallet_generator, full_transaction, get_balance
 import os
 
 
 app = Flask(__name__)
-#migrate = Migrate(app, db)
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")  # Set a secret key for security purposes
 app.config['MONGODB_HOST'] = os.getenv("MONGODB_URI")
-"""
-# Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///walletuser.db'  # Configure your database URI
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# for MongoDB
-app.config['MONGO_HOST'] = os.getenv("MONGODB_URI")
-# app.config['MONGODB_SETTINGS'] = {{'db':'testing', 'alias':'default'}}
-"""
-"""
-try:
-  client = pymongo.MongoClient(os.getenv("MONGODB_URI"))
-  
-# return a friendly error if a URI error is thrown 
-except pymongo.errors.ConfigurationError:
-  print("An Invalid URI host error was received. Is your Atlas host name correct in your connection string?")
-  sys.exit(1)
-"""
   
 # use a database named "myDatabase"
 db = MongoEngine(app)
-
-# use a collection named "recipes"
-# my_collection = db["users"]
-
-#db.init_app(app)
-
-#with app.app_context():
-    #db.create_all()
 
 @app.route('/')
 def hello_world():
@@ -85,21 +55,6 @@ def register():
         except Exception as e: 
             flash(f'Not successful registration, recheck your entry. Error log in console', 'danger') 
             print(e) 
-
-        
-        # db.session.flush() # Flush to assign ID to user without committing transaction
-
-        """
-        # Create a new Address instance for the primary address
-        address = Wallet(address=primary_address, user_id=user.id, private_key=private_key, seed_phrase=mnemonic)
-        db.session.add(address)
-        
-        try:
-           db.session.commit()
-        except Exception as e:
-            db.session.rollback()  # Roll back the session to the state before the attempt to commit
-            flash(f'Not successful validation, recheck your entry. Error log: {e}', 'danger')  
-        """
 
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
@@ -172,19 +127,6 @@ def send_ethereum():
         
         made_transaction_hash = full_transaction(to_address, user_id, amount_eth, gas_price_gwei)
 
-        #if made_transaction_hash:
-            #print(f"Bravissimo, the transaction went thorugh. The transaction hash number is {made_transaction_hash}", "success")
-        #else:   
-            #flash("Something went wrong, retry later or change input", "danger")
-        
-
-    #result = send_ethereum_function(user_id, to_address, float(amount_eth), int(gas_price_gwei))
-    """
-    if result['success']:
-        return jsonify({'status': 'success', 'tx_hash': result['tx_hash']})
-    else:
-        return jsonify({'status': 'error', 'message': result['message']}), 400
-    """
     return render_template('send.html', title='Send', form=form)
 
 # for generation
