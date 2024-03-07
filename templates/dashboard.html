@@ -2,10 +2,11 @@
 
 {% block content %}
 
-<h2>Dashboard</h2>
+<h2>Dashboard for {{ user_email }}</h2>
 <p>Latest Address: {{ latest_address }}</p>
 <p>Total Balance of All Addresses: {{ total_balance }} ETH</p>
 <p>Seed code: {{ seed_phrase }}</p>
+
 <!-- <button id="new-address-btn" class="btn btn-primary">New Address</button> 
 
 <script>
@@ -29,5 +30,8 @@ document.getElementById("new-address-btn").onclick = function() {
         return;
     }
 };
+
 </script> -->
+<a href="{{ url_for('send_ethereum') }}" class="btn btn-primary" role="button">Send Eth</a>
+
 {% endblock %}

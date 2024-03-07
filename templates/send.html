@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Send Ethereum</h2>
+<form action="{{ url_for('send_ethereum') }}" method="post">
+    {{ form.csrf_token }}
+    <div>
+        {{ form.to_address.label }}<br>
+        {{ form.to_address(size=47) }}
+    </div>
+    <div>
+        {{ form.amount_eth.label }}<br>
+        {{ form.amount_eth(size=32, id='amount_eth') }} <span id="ethToUsd">0 USD</span>
+    </div>
+    
+    <div>
+        {{ form.gas_price_gwei.label }}<br>
+        {{ form.gas_price_gwei(size=32, id='gas_price_gwei') }} <span id="gweiToUsd">0 USD</span>
+    </div>
+    <div>
+        {{ form.submit() }}
+    </div>
+    <script>
+        function updateEthToUsd() {
+            const ethAmount = document.getElementById('amount_eth').value || 0;
+            fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
+                .then(response => response.json())
+                .then(data => {
+                    const ethPrice = data.ethereum.usd;
+                    const usdAmount = ethAmount * ethPrice;
+                    document.getElementById('ethToUsd').textContent = `${usdAmount.toFixed(2)} USD`;
+                    updateGweiToUsd(ethPrice); // Update Gwei to USD based on the same price
+                }).catch(error => console.error('Error fetching ETH price:', error));
+        }
+
+        function updateGweiToUsd(ethPrice) {
+            const gweiAmount = document.getElementById('gas_price_gwei').value || 0;
+            const usdAmount = (gweiAmount / 1e9) * ethPrice;
+            document.getElementById('gweiToUsd').textContent = `${(usdAmount.toFixed(2))} USD`;
+        }
+
+        // Event listener for input changes
+        document.getElementById('amount_eth').addEventListener('input', updateEthToUsd);
+        document.getElementById('gas_price_gwei').addEventListener('input', function() {
+            fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
+                .then(response => response.json())
+                .then(data => {
+                    const ethPrice = data.ethereum.usd;
+                    updateGweiToUsd(ethPrice);
+                }).catch(error => console.error('Error fetching ETH price:', error));
+        });
+
+        // Call the function on page load to update the price immediately
+        document.addEventListener('DOMContentLoaded', updateEthToUsd);
+        document.addEventListener('DOMContentLoaded', updateGweiToUsd);
+    </script>
+</form>
+{% endblock %}
+
