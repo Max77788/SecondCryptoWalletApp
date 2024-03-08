@@ -5,6 +5,6 @@ mnemonic
 bip32utils
 bip44==0.1.0
 pymongo==4.0.1
-bson==0.5.10
+bson
 flask_mongoengine
 
