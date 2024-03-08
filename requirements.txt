@@ -1,5 +1,5 @@
 Flask==3.0.2
-eth-account==0.5.6
+eth-account
 web3==5.28.0
 mnemonic==0.20
 bip32utils==0.3.post4
