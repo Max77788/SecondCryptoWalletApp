@@ -5,5 +5,5 @@ mnemonic
 bip32utils
 bip44
 pymongo
-flask_mongoengine
+git+https://github.com/idoshr/flask-mongoengine.git@1.0.1
 
