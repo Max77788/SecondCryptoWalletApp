@@ -1,10 +1,10 @@
-Flask==3.0.2
+Flask
 eth-account
-web3==5.28.0
+web3
 mnemonic
 bip32utils
-bip44==0.1.0
-pymongo==4.0.1
+bip44
+pymongo
 bson
 flask_mongoengine
 
