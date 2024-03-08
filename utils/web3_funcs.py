@@ -5,10 +5,8 @@ import os
 from flask import session
 # from models import db, User, Wallet
 from models_mongo import User
-from bip44 import Wallet
 from eth_utils import to_checksum_address
 import bip32utils
-from bson import ObjectId
 from flask import flash, redirect, url_for
 
 def wallet_generator():
@@ -44,7 +42,7 @@ def get_balance():
     if not user_id:
         return "User not logged in", 403  # Or handle as appropriate
 
-    user = User.objects(id=ObjectId(user_id)).first()
+    user = User.objects(id=user_id).first()
     if not user:
         return "User not found", 404  # Or handle as appropriate
 
@@ -126,7 +124,7 @@ def generate_new_address_for_user():
 """
 
 def full_transaction(to_address, user_id, amount_eth, gas_price_gwei):
-    user = User.objects(id=ObjectId(user_id)).first()
+    user = User.objects(id=user_id).first()
     if not user:
         flash("User not found", "danger")
         return redirect(url_for('send_ethereum'))

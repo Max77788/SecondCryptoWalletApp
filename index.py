@@ -2,7 +2,6 @@ from flask import Flask, render_template, url_for, flash, redirect, request, ses
 #from flask_sqlalchemy import SQLAlchemy
 #from flask_migrate import Migrate
 from flask_mongoengine import MongoEngine
-import pymongo
 # from pymongo.server_api import ServerApi
 # from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegistrationForm, LoginForm, SendEthForm
@@ -86,11 +85,8 @@ def dashboard():
 
     # Use MongoEngine's syntax to query the user by id
     # Assuming `user_id` stored in session is a string representation of ObjectId
-    from bson import ObjectId
-    if not ObjectId.is_valid(user_id):  # Validate it to ensure it's a valid ObjectId string
-        return "Invalid user ID format", 400
 
-    user = User.objects(id=ObjectId(user_id)).first()
+    user = User.objects(id=user_id).first()
     if not user:
         # Handle case where user is not found
         return "User not found", 404
