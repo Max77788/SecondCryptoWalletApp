@@ -21,7 +21,7 @@ db = MongoEngine(app)
 
 @app.route('/')
 def hello_world():
-    return redirect(url_for('login'))
+    return "Hello World"
 
 @app.route('/main')
 def main_():
@@ -129,7 +129,8 @@ def send_ethereum():
 
     return render_template('send.html', title='Send', form=form)
 
-# for generation
+# for generation (deprecated)
+"""
 @app.route('/generate_new_wallet', methods=['POST', 'GET'])
 def generate_new_wallet():
     user_id = session.get('user_id')
@@ -145,22 +146,12 @@ def generate_new_wallet():
     print("New Address ", new_address, " debugging line")
 
     # Save the new address in the database
-    address = Wallet(address=new_address, user_id=user.id, seed_phrase=mnemonic, private_key=private_key_hex)
-    db.session.add(address)
-    db.session.commit()
+    # address = Wallet(address=new_address, user_id=user.id, seed_phrase=mnemonic, private_key=private_key_hex)
+    # db.session.add(address)
+    # db.session.commit()
     
     return {'success': True}
-
-
-# tests
-@app.route('/test_db')
-def test_db():
-    try:
-        user_count = User.query.count()
-        return f'There are {user_count} users in the database.'
-    except Exception as e:
-        return f'Database connection failed: {str(e)}'
-
+"""
 
 
 

@@ -61,8 +61,6 @@ def get_balance():
     
     return balance_eth
 
-    return total_balance_eth
-
 # Util function to get the total balance of the wallet
 def get_total_balance():
     """

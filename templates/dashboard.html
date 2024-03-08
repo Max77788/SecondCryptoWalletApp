@@ -7,31 +7,6 @@
 <p>Total Balance of All Addresses: {{ total_balance }} ETH</p>
 <p>Seed code: {{ seed_phrase }}</p>
 
-<!-- <button id="new-address-btn" class="btn btn-primary">New Address</button> 
-
-<script>
-document.getElementById("new-address-btn").onclick = function() {
-    // Show confirmation popup
-    if (confirm("Are you sure you want to generate a new address for your wallet?")) {
-        // User clicked "Yes"
-        fetch("{{ url_for('generate_new_wallet') }}")
-            .then(response => response.json())
-            .then(data => {
-                if(data.success) {
-                    alert("New address generated successfully.");
-                    // Optionally refresh the page or update the address list dynamically
-                    window.location.reload();
-                } else {
-                    alert("Failed to generate new address.");
-                }
-            });
-    } else {
-        // User clicked "No", simply return without doing anything
-        return;
-    }
-};
-
-</script> -->
 <a href="{{ url_for('send_ethereum') }}" class="btn btn-primary" role="button">Send Eth</a>
 
 {% endblock %}
