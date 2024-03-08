@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from flask import flash
+from flask import flash, redirect, url_for
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from models_mongo import User
@@ -16,7 +16,6 @@ class RegistrationForm(FlaskForm):
         if user:
             flash(f'Not successful validation, recheck your entry. Either the email is already registered or the passwords do not match.', 'danger')
             raise ValidationError('That email is already taken. Please choose a different one.')
-
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])

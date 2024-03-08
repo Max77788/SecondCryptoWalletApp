@@ -20,7 +20,7 @@ db = MongoEngine(app)
 
 @app.route('/')
 def hello_world():
-    return "Hello World"
+    return redirect(url_for("login"))
 
 @app.route('/main')
 def main_():
@@ -29,6 +29,8 @@ def main_():
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
+
+    
     if form.validate_on_submit():
         if form.password.data != form.confirm_password.data:
             flash('Passwords do not match. Please try again.', 'danger')
@@ -115,6 +117,7 @@ def dashboard():
 @app.route('/send_ethereum', methods=['POST', 'GET'])
 def send_ethereum():
     form = SendEthForm()
+    
     if form.validate_on_submit():
         user_id = session.get('user_id')
         to_address = request.form.get('to_address')
@@ -153,4 +156,4 @@ def generate_new_wallet():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
