@@ -6,4 +6,4 @@ bip32utils
 bip44
 pymongo
 git+https://github.com/idoshr/flask-mongoengine.git@1.0.1
-
+flask_wtf
