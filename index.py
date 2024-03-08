@@ -157,4 +157,4 @@ def generate_new_wallet():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
