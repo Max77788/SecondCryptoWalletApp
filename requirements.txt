@@ -5,6 +5,5 @@ mnemonic
 bip32utils
 bip44
 pymongo
-bson
 flask_mongoengine
 
