@@ -20,7 +20,7 @@ db = MongoEngine(app)
 
 @app.route('/')
 def hello_world():
-    return redirect(url_for("login"))
+    return redirect(url_for("register"))
 
 @app.route('/main')
 def main_():
