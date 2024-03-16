@@ -14,9 +14,9 @@
     
     <div>
         {{ form.gas_price_gwei.label }}<br>
-        {{ form.gas_price_gwei(size=32, id='gas_price_gwei') }} <span id="gweiToUsd">0 USD</span>
+        {{ form.gas_price_gwei(size=32, id='gas_price_gwei') }} <span id="gweiToUsd">0 USD</span>  
     </div>
-    <div>
+    <div style="margin-top: 15px;">
         {{ form.submit() }}
     </div>
     <script>
