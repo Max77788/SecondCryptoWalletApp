@@ -1,6 +1,6 @@
 Flask
 eth-account
-web3
+web3==5.31.3
 mnemonic
 bip32utils
 bip44
@@ -8,4 +8,4 @@ pymongo
 git+https://github.com/idoshr/flask-mongoengine.git@1.0.1
 flask_wtf
 email_validator
-eth_utils
+eth_utils==1.10.0
