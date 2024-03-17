@@ -52,7 +52,7 @@ def get_balance():
     checksum_address = to_checksum_address(user.primary_address)
     
     # Get the balance in Wei
-    balance_wei = web3.eth.getBalance(checksum_address)
+    balance_wei = web3.eth.get_balance(checksum_address)
     
     # Convert the balance from Wei to Ether
     balance_eth = web3.fromWei(balance_wei, 'ether')
