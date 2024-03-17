@@ -5,7 +5,7 @@ import os
 from flask import session
 # from models import db, User, Wallet
 from models_mongo import User
-#from eth_utils import to_checksum_address
+from eth_utils import to_checksum_address
 import bip32utils
 from flask import flash, redirect, url_for
 
@@ -33,7 +33,7 @@ def wallet_generator():
 
     # Create an Ethereum account from the private key
     account = Account.privateKeyToAccount(private_key_hex)
-    primary_address = Web3.to_checksum_address(account.address)
+    primary_address = to_checksum_address(account.address)
 
     return mnemonic, private_key_hex, primary_address
 
@@ -49,7 +49,7 @@ def get_balance():
     web3 = Web3(Web3.HTTPProvider(os.getenv("INFURA_PROJECT_URL")))  # Example provider
 
     # Convert the address to a checksum address
-    checksum_address = Web3.toChecksumAddress(user.primary_address)
+    checksum_address = to_checksum_address(user.primary_address)
     
     # Get the balance in Wei
     balance_wei = web3.eth.getBalance(checksum_address)
