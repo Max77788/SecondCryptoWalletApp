@@ -5,7 +5,7 @@ import os
 from flask import session
 # from models import db, User, Wallet
 from models_mongo import User
-from eth_utils import to_checksum_address
+#from eth_utils import to_checksum_address
 import bip32utils
 from flask import flash, redirect, url_for
 
@@ -33,7 +33,7 @@ def wallet_generator():
 
     # Create an Ethereum account from the private key
     account = Account.privateKeyToAccount(private_key_hex)
-    primary_address = to_checksum_address(account.address)
+    primary_address = Web3.to_checksum_address(account.address)
 
     return mnemonic, private_key_hex, primary_address
 
