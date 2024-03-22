@@ -77,11 +77,31 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
   return render_template('login.html', title='Login', form=form)
 
+
+@app.route('/hide_wallet', methods=['POST'])
+def hide_wallet():
+    user_id = session.get('user_id')
+    if not user_id:
+        flash('You need to log in to hide a wallet.', 'warning')
+        return redirect(url_for('login'))
+
+    user = User.objects(id=user_id).first()
+    if user:
+        user.update(wallet_hidden=True)
+        flash('Your wallet has been hidden.', 'success')
+    else:
+        flash('User not found.', 'danger')
+
+    return redirect(url_for('dashboard'))
+ 
+
 @app.route('/dashboard')
 def dashboard():
     user_id = session.get('user_id')
     print("user id", user_id, " debugging line")  # debugging line
     if not user_id:
+        # Flash a message to inform the user of the redirection reason
+        flash('You need to be logged in to access the dashboard.', 'warning')
         # Redirect to login if no user is in session
         return redirect(url_for('login'))
 
@@ -90,8 +110,10 @@ def dashboard():
 
     user = User.objects(id=user_id).first()
     if not user:
-        # Handle case where user is not found
-        return "User not found", 404
+        # Flash a message to inform the user that their account could not be found
+        flash('User not found. Please login again.', 'danger')
+        # Redirect to login if the user is not found
+        return redirect(url_for('login'))
     
     """
     wallets = user.wallets
@@ -111,7 +133,7 @@ def dashboard():
 
     user_email = user.email
 
-    return render_template('dashboard.html', latest_address=address_to_display, total_balance=total_balance, seed_phrase=seed_phrase, user_email=user_email)
+    return render_template('dashboard.html', latest_address=address_to_display, total_balance=total_balance, seed_phrase=seed_phrase, user_email=user_email, wallet_hidden=user.wallet_hidden)
 
 
 @app.route('/send_ethereum', methods=['POST', 'GET'])

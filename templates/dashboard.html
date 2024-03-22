@@ -3,10 +3,18 @@
 {% block content %}
 
 <h2>Dashboard for {{ user_email }}</h2>
-<p>Latest Address: {{ latest_address }}</p>
-<p>Total Balance of All Addresses: {{ total_balance }} ETH</p>
-<p>Seed code: {{ seed_phrase }}</p>
+{% if not wallet_hidden %}
+    <p>Latest Address: {{ latest_address }}</p>
+    <p>Total Balance of All Addresses: {{ total_balance }} ETH</p>
+    <p>Seed code: {{ seed_phrase }}</p>
 
-<a href="{{ url_for('send_ethereum') }}" class="btn btn-primary" role="button">Send Eth</a>
+    <a href="{{ url_for('send_ethereum') }}" class="btn btn-primary" role="button">Send Eth</a>
+    <form action="{{ url_for('hide_wallet') }}" method="post" onsubmit="return confirm('Are you sure you want to hide your wallet?');">
+        <button type="submit" class="btn btn-danger">Hide Wallet</button>
+    </form>
+{% else %}
+    <p>No wallet!</p>
+{% endif %}
 
 {% endblock %}
+

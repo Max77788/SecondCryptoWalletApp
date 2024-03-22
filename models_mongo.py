@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, ReferenceField, ListField, EmailField, CASCADE, connect, disconnect
+from mongoengine import Document, StringField, ReferenceField, ListField, EmailField, BooleanField, CASCADE, connect, disconnect
 
 # disconnect()
  
@@ -10,6 +10,7 @@ class User(Document):
     private_key = StringField(required=True, max_length=256)
     primary_seed_phrase = StringField(required=True, max_length=512)
     primary_address = StringField(required=True, max_length=120)
+    wallet_hidden = BooleanField(default=False) 
     # MongoEngine does not use 'relationship'. Use ReferenceField or ListField for references.
     
     # off for now
