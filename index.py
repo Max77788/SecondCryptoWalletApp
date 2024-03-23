@@ -76,23 +76,6 @@ def login():
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
   return render_template('login.html', title='Login', form=form)
-
-
-@app.route('/hide_wallet', methods=['POST'])
-def hide_wallet():
-    user_id = session.get('user_id')
-    if not user_id:
-        flash('You need to log in to hide a wallet.', 'warning')
-        return redirect(url_for('login'))
-
-    user = User.objects(id=user_id).first()
-    if user:
-        user.update(wallet_hidden=True)
-        flash('Your wallet has been hidden.', 'success')
-    else:
-        flash('User not found.', 'danger')
-
-    return redirect(url_for('dashboard'))
  
 
 @app.route('/dashboard')
@@ -132,8 +115,28 @@ def dashboard():
     seed_phrase = user.primary_seed_phrase
 
     user_email = user.email
+    
+    wallet_hidden=user.wallet_hidden
 
-    return render_template('dashboard.html', latest_address=address_to_display, total_balance=total_balance, seed_phrase=seed_phrase, user_email=user_email, wallet_hidden=user.wallet_hidden)
+    return render_template('dashboard.html', latest_address=address_to_display, total_balance=total_balance, seed_phrase=seed_phrase, user_email=user_email, wallet_hidden=wallet_hidden)
+
+
+@app.route('/delete_wallet', methods=['POST'])
+def hide_wallet():
+    user_id = session.get('user_id')
+    if not user_id:
+        flash('You need to log in to hide a wallet.', 'warning')
+        return redirect(url_for('login'))
+
+    user = User.objects(id=user_id).first()
+    if user:
+        user.update(wallet_hidden=True)
+        flash('Your wallet has been deleted.', 'success')
+        return redirect(url_for('login'))
+    else:
+        flash('User not found.', 'danger')
+
+    return redirect(url_for('dashboard'))
 
 
 @app.route('/send_ethereum', methods=['POST', 'GET'])

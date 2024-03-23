@@ -9,11 +9,12 @@
     <p>Seed code: {{ seed_phrase }}</p>
 
     <a href="{{ url_for('send_ethereum') }}" class="btn btn-primary" role="button">Send Eth</a>
-    <form action="{{ url_for('hide_wallet') }}" method="post" onsubmit="return confirm('Are you sure you want to hide your wallet?');">
+    <form action="{{ url_for('delete_wallet') }}" method="post" onsubmit="return confirm('Are you sure you want to hide your wallet?');">
         <button type="submit" class="btn btn-danger">Hide Wallet</button>
     </form>
 {% else %}
-    <p>No wallet!</p>
+    <p>Wallet deleted!</p>
+    <p><a href= "/login">Login with the other account</a> or <a href= "/register">Register new account</a></p>
 {% endif %}
 
 {% endblock %}
