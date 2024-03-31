@@ -9,3 +9,4 @@ git+https://github.com/idoshr/flask-mongoengine.git@1.0.1
 flask_wtf
 email_validator
 eth_utils==1.10.0
+gunicorn
